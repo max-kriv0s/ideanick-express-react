@@ -1,0 +1,6 @@
+printWidth: 120 # - длина строки 120 символов
+trailingComma: 'es5' # - установка запятых в массивх и объектах, да и везде где можно в рамкаж спецификации javascript
+tabWidth: 2 # - tab 2 пробела
+semi: true # - отсутствие ";"
+singleQuote: true # - одинарные ковычки
+endOfLine: auto
