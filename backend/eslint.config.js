@@ -1,8 +1,7 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
+import love from 'eslint-config-love';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import importPlugin from 'eslint-plugin-import';
 import nodePlugin from 'eslint-plugin-node';
@@ -11,29 +10,24 @@ import prettierPlugin from 'eslint-plugin-prettier';
 export default tseslint.config(
   { ignores: ['dist', 'node_modules'] },
   {
-    // Распределяем конфиг love в базовый объект (не в extends!)
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      sourceType: 'module',
+      globals: globals.node,
       parserOptions: {
         project: './tsconfig.json',
       },
     },
     plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-      // 'eslint-comments': eslintComments,
       import: importPlugin,
       node: nodePlugin,
       prettier: prettierPlugin,
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      // 'prettier/prettier': ['error'],
-      // отключаем весь eslint-comments плагин
+      'prettier/prettier': ['error'],
+
       // Добавляем правило сортировки импортов
       'import/order': [
         'error',
@@ -45,7 +39,7 @@ export default tseslint.config(
           },
         },
       ],
-      // // ✅ Использовать только `type` для объявления типов (вместо interface)
+      // ✅ Использовать только `type` для объявления типов (вместо interface)
       // '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
 
       // 🚫 Отключить требование логических проверок с приведением к boolean
@@ -68,9 +62,6 @@ export default tseslint.config(
 
       // 🚫 Отключить требование использовать `as Type` вместо `<Type>` или наоборот
       '@typescript-eslint/consistent-type-assertions': 'off',
-
-      // 🚫 Отключить правило, проверяющее корректность ссылок в тегах `<a>`
-      'jsx-a11y/anchor-is-valid': 'off',
 
       // ✅ Всегда требовать фигурные скобки в if, for, while, etc.
       curly: ['error', 'all'],
@@ -95,49 +86,7 @@ export default tseslint.config(
           message: 'Use instead import { env } from "lib/env"',
         },
       ],
-      // Ограничиваем импорты из backend пакета
-      '@typescript-eslint/no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: [
-                '@ideanick/backend/**',
-                '!@ideanick/backend/**/',
-                '!@ideanick/backend/**/input',
-                '!@ideanick/backend/src/utils/can',
-              ],
-              allowTypeImports: true,
-              message: 'Only types and input schemas are allowed to be imported from backend workspace',
-            },
-          ],
-        },
-      ],
-    },
-  },
-  // Основной конфиг
-  {
-    files: ['src/**/*.{ts,tsx}'],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.app.json'],
-      },
-    },
-  },
-
-  // Отдельный override для конфигов
-  {
-    files: ['vite.config.ts', 'scripts/**/*.ts'],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json'],
-      },
     },
   },
   eslintConfigPrettier
 );
-
-// export default [
-//   baseConfig,
-//   eslintConfigPrettier, // prettier должен идти **последним**
-// ];
