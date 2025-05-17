@@ -86,6 +86,7 @@ export default tseslint.config(
           message: 'Use instead import { env } from "lib/env"',
         },
       ],
+      'no-console': ['error', { allow: ['info', 'error', 'warn'] }],
     },
   },
   eslintConfigPrettier
