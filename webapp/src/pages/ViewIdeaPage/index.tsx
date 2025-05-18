@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import { Segment } from 'src/components/Segment';
-import type { ViewIdeaRouteParams } from 'src/lib/routes';
-import { trpc } from 'src/lib/trpc';
+import { Segment } from '../../components/Segment';
+import type { ViewIdeaRouteParams } from '../../lib/routes';
+import { trpc } from '../../lib/trpc';
 import css from './index.module.scss';
 
 export const ViewIdeaPage = () => {

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Segment } from 'src/components/Segment';
-import { getViewIdeaRoute } from 'src/lib/routes';
+import { Segment } from '../../components/Segment';
+import { getViewIdeaRoute } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
 import css from './index.module.scss';
 
